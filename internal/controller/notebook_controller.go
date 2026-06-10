@@ -13,6 +13,7 @@ type INotebookController interface {
 	RegisterRoutes(r fiber.Router)
 	Create(ctx *fiber.Ctx) error
 	Show(ctx *fiber.Ctx) error
+	Update(ctx *fiber.Ctx) error
 }
 
 type notebookController struct {
@@ -27,7 +28,7 @@ func (c *notebookController) RegisterRoutes(r fiber.Router) {
 	h := r.Group("/notebook/v1")
 	h.Post("", c.Create)
 	h.Get(":id", c.Show)
-	h.Get(":id", c.Show)
+	h.Put(":id", c.Update)
 }
 
 func (c *notebookController) Create(ctx *fiber.Ctx) error {

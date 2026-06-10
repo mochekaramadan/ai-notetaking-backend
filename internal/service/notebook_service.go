@@ -70,12 +70,13 @@ func (c *notebookService) Update(ctx context.Context, req *dto.UpdateNotebookReq
 	notebook.Name = req.Name
 	notebook.UpdatedAt = &now
 
-	res := dto.ShowNotebookResponse{
-		Id:        notebook.Id,
-		Name:      notebook.Name,
-		ParentId:  notebook.ParentId,
-		CreatedAt: notebook.CreatedAt,
-		UpdatedAt: notebook.UpdatedAt,
+	err = c.notebookRepository.Update(ctx, notebook)
+	if err != nil {
+		return nil, err
+	}
+
+	res := dto.UpdateNotebookResponse{
+		Id: notebook.Id,
 	}
 
 	return &res, nil
